@@ -33,9 +33,26 @@ const DadosPessoaisForm = ({ onNavigate }) => {
     return formatted;
   };
 
+  const formatDate = (value) => {
+    // Remove tudo que não for dígito
+    const digits = value.replace(/\D/g, '');
+    let formatted = digits;
+    if (digits.length > 4) {
+      formatted = digits.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3');
+    } else if (digits.length > 2) {
+      formatted = digits.replace(/(\d{2})(\d{1,2})/, '$1/$2');
+    }
+    return formatted;
+  };
+
   const handleCpfChange = (text) => {
     const formatted = formatCPF(text);
     setCpf(formatted);
+  };
+
+  const handleDateChange = (text) => {
+    const formatted = formatDate(text);
+    setInicio(formatted);
   };
 
   const handleProx = () => {
@@ -115,8 +132,9 @@ const DadosPessoaisForm = ({ onNavigate }) => {
                 placeholder="dd/mm/aaaa"
                 placeholderTextColor="#94a3b8"
                 value={inicio}
-                onChangeText={setInicio}
+                onChangeText={handleDateChange}
                 keyboardType="numeric"
+                maxLength={10}
               />
             </View>
           </View>
