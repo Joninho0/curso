@@ -10,12 +10,14 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const DadosPessoaisForm = () => {
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [idade, setIdade] = useState('');
   const [inicio, setInicio] = useState('');
+  const [tipo, setTipo] = useState('filho');
 
   const formatCPF = (value) => {
     // Remove tudo que não for dígito
@@ -36,17 +38,12 @@ const DadosPessoaisForm = () => {
     setCpf(formatted);
   };
 
-  const handleVisitarFilho = () => {
-    // Feedback sutil ao tocar no card (como no original)
-    Alert.alert('Visitar o Filho', 'Você tocou em "Visitar o Filho"');
-  };
-
   const handleProx = () => {
-    if (!nome.trim() || !cpf.trim() || !idade.trim() || !inicio.trim()) {
+    if (!nome.trim() || !cpf.trim() || !idade.trim() || !inicio.trim() || !tipo) {
       Alert.alert('Campos incompletos', 'Preencha todos os campos antes de prosseguir.');
       return;
     }
-    Alert.alert('Próximo', 'Formulário enviado (simulação).');
+    Alert.alert('Próximo', `Formulário enviado - Tipo: ${tipo}`);
   };
 
   return (
@@ -116,15 +113,21 @@ const DadosPessoaisForm = () => {
             </View>
           </View>
 
-          {/* Bloco "Visitar o Filho" com seta */}
-          <TouchableOpacity
-            style={styles.visitCard}
-            onPress={handleVisitarFilho}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.visitText}>Visitar o Filho</Text>
-            <Text style={styles.arrowSymbol}>→</Text>
-          </TouchableOpacity>
+          {/* Seletor: Filho ou Visitante */}
+          <View style={styles.fieldFull}>
+            <Text style={styles.label}>Você é um:</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={tipo}
+                onValueChange={setTipo}
+                style={styles.picker}
+              >
+                <Picker.Item label="Selecione..." value="" />
+                <Picker.Item label="Filho" value="filho" />
+                <Picker.Item label="Visitante" value="visitante" />
+              </Picker>
+            </View>
+          </View>
 
           {/* Botão Prox → */}
           <TouchableOpacity
@@ -204,29 +207,21 @@ const styles = StyleSheet.create({
   uppercase: {
     textTransform: 'uppercase',
   },
-  visitCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#f1f5f9',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    borderRadius: 24,
+  pickerContainer: {
     borderWidth: 1.5,
     borderColor: '#e2e8f0',
-    marginVertical: 8,
-    marginBottom: 28,
+    borderRadius: 18,
+    backgroundColor: '#f8fafc',
+    overflow: 'hidden',
   },
-  visitText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#0b1e33',
-    letterSpacing: -0.3,
+  picker: {
+    height: 50,
+    color: '#0f172a',
+    fontSize: 16,
   },
-  arrowSymbol: {
-    fontSize: 28,
-    color: '#1e293b',
-    marginRight: 4,
+  fieldFull: {
+    width: '100%',
+    marginBottom: 16,
   },
   proxButton: {
     backgroundColor: '#0b1e33',
