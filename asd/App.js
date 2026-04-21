@@ -7,60 +7,95 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  ScrollView,
 } from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
-
-  const validate = () => {
-    const newErrors = {};
-    if (!name.trim()) newErrors.name = 'Nome é obrigatório';
-    if (!email.trim()) newErrors.email = 'E-mail é obrigatório';
-    if (!password) newErrors.password = 'Senha é obrigatória';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const [nome, setNome] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [idade, setIdade] = useState('');
+  const [orixa, setOrixa] = useState('');
+  const [tempoCasa, setTempoCasa] = useState('');
 
   const handleSubmit = () => {
-    if (validate()) Alert.alert('Sucesso', `Bem-vindo, ${name}!`);
+    Alert.alert('Sucesso', 'Cadastro atualizado com sucesso!');
+    console.log({ nome, cpf, idade, orixa, tempoCasa });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Formulário Simples</Text>
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        value={name}
-        onChangeText={setName}
-      />
-      {errors.name && <Text style={styles.error}>{errors.name}</Text>}
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.card}>
+          <View style={styles.headerRow}>
+            <Text style={styles.title}>Atualização</Text>
+            <Text style={styles.title}>Cadastral</Text>
+          </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="E-mail"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      {errors.email && <Text style={styles.error}>{errors.email}</Text>}
+          <View style={styles.iconCircle}>
+            <Text style={styles.icon}>✦</Text>
+          </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {errors.password && <Text style={styles.error}>{errors.password}</Text>}
+          <View style={styles.row}>
+            <View style={styles.fieldHalf}>
+              <Text style={styles.label}>Nome</Text>
+              <TextInput
+                style={styles.input}
+                value={nome}
+                onChangeText={setNome}
+                placeholder="Digite seu nome"
+              />
+            </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Enviar</Text>
-      </TouchableOpacity>
+            <View style={styles.fieldHalf}>
+              <Text style={styles.label}>CPF</Text>
+              <TextInput
+                style={styles.input}
+                value={cpf}
+                onChangeText={setCpf}
+                placeholder="Digite seu CPF"
+                keyboardType="numeric"
+              />
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <View style={styles.fieldHalf}>
+              <Text style={styles.label}>Idade</Text>
+              <TextInput
+                style={styles.input}
+                value={idade}
+                onChangeText={setIdade}
+                placeholder="Sua idade"
+                keyboardType="numeric"
+              />
+            </View>
+
+            <View style={styles.fieldHalf}>
+              <Text style={styles.label}>Orixá</Text>
+              <TextInput
+                style={styles.input}
+                value={orixa}
+                onChangeText={setOrixa}
+                placeholder="Digite o orixá"
+              />
+            </View>
+          </View>
+
+          <View style={styles.fieldFull}>
+            <Text style={styles.label}>Tempo de Casa</Text>
+            <TextInput
+              style={styles.input}
+              value={tempoCasa}
+              onChangeText={setTempoCasa}
+              placeholder="Ex: 2 anos"
+            />
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Salvar</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -68,33 +103,79 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#f3f3f3',
+  },
+  scroll: {
+    flexGrow: 1,
     justifyContent: 'center',
+    padding: 20,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 20,
+    borderWidth: 2,
+    borderColor: '#222',
+    position: 'relative',
+  },
+  headerRow: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 26,
     fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#222',
+  },
+  iconCircle: {
+    position: 'absolute',
+    top: 18,
+    right: 18,
+    width: 55,
+    height: 55,
+    borderRadius: 999,
+    borderWidth: 2,
+    borderColor: '#222',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f7f7f7',
+  },
+  icon: {
+    fontSize: 26,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+    marginBottom: 16,
+  },
+  fieldHalf: {
+    flex: 1,
+  },
+  fieldFull: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 6,
+    color: '#222',
+    fontWeight: '600',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 12,
-    marginVertical: 8,
-    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#222',
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
     fontSize: 16,
   },
-  error: {
-    color: 'red',
-    fontSize: 12,
-    marginLeft: 4,
-  },
   button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 5,
-    marginTop: 20,
+    marginTop: 10,
+    backgroundColor: '#222',
+    paddingVertical: 14,
+    borderRadius: 14,
     alignItems: 'center',
   },
   buttonText: {
