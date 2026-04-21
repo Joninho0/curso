@@ -10,10 +10,10 @@ import {
   ScrollView,
 } from 'react-native';
 
-export default function App() {
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [idade, setIdade] = useState('');
+export default function App({ onBack, formData }) {
+  const [nome, setNome] = useState(formData?.nome || '');
+  const [cpf, setCpf] = useState(formData?.cpf || '');
+  const [idade, setIdade] = useState(formData?.idade || '');
   const [orixa, setOrixa] = useState('');
   const [tempoCasa, setTempoCasa] = useState('');
 
@@ -94,6 +94,15 @@ export default function App() {
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Salvar</Text>
           </TouchableOpacity>
+
+          {onBack && (
+            <TouchableOpacity 
+              style={[styles.button, styles.buttonBack]} 
+              onPress={onBack}
+            >
+              <Text style={styles.buttonText}>← Voltar</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -177,6 +186,9 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 14,
     alignItems: 'center',
+  },
+  buttonBack: {
+    backgroundColor: '#666',
   },
   buttonText: {
     color: '#fff',

@@ -1,8 +1,27 @@
 import { registerRootComponent } from 'expo';
-
+import React, { useState } from 'react';
 import App from './App';
+import App2 from './App2';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
-registerRootComponent(App);
+function RootNavigator() {
+  const [currentPage, setCurrentPage] = useState('app1');
+  const [formData, setFormData] = useState(null);
+
+  const handleNavigateToApp2 = (data) => {
+    console.log('📋 Dados do Formulário 1:', data);
+    setFormData(data);
+    setCurrentPage('app2');
+  };
+
+  const handleBackToApp = () => {
+    setCurrentPage('app1');
+  };
+
+  return currentPage === 'app1' ? (
+    <App onNavigate={handleNavigateToApp2} />
+  ) : (
+    <App2 onBack={handleBackToApp} formData={formData} />
+  );
+}
+
+registerRootComponent(RootNavigator);

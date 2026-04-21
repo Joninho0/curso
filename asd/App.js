@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const DadosPessoaisForm = () => {
+const DadosPessoaisForm = ({ onNavigate }) => {
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [idade, setIdade] = useState('');
@@ -43,7 +43,15 @@ const DadosPessoaisForm = () => {
       Alert.alert('Campos incompletos', 'Preencha todos os campos antes de prosseguir.');
       return;
     }
-    Alert.alert('Próximo', `Formulário enviado - Tipo: ${tipo}`);
+    
+    const formData = { nome, cpf, idade, inicio, tipo };
+    console.log('📋 Enviando dados:', formData);
+    
+    if (onNavigate) {
+      onNavigate(formData);
+    } else {
+      Alert.alert('Próximo', `Formulário enviado - Tipo: ${tipo}`);
+    }
   };
 
   return (
