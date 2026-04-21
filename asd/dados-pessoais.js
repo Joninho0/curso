@@ -14,6 +14,8 @@ import { Picker } from '@react-native-picker/picker';
 
 const DadosPessoaisForm = ({ onNavigate }) => {
   const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [cpf, setCpf] = useState('');
   const [idade, setIdade] = useState('');
   const [inicio, setInicio] = useState('');
@@ -56,12 +58,12 @@ const DadosPessoaisForm = ({ onNavigate }) => {
   };
 
   const handleProx = () => {
-    if (!nome.trim() || !cpf.trim() || !idade.trim() || !inicio.trim() || !tipo) {
+    if (!nome.trim() || !email.trim() || !senha.trim() || !cpf.trim() || !idade.trim() || !inicio.trim() || !tipo) {
       Alert.alert('Campos incompletos', 'Preencha todos os campos antes de prosseguir.');
       return;
     }
     
-    const formData = { nome, cpf, idade, inicio, tipo };
+    const formData = { nome, email, senha, cpf, idade, inicio, tipo };
     console.log('📋 Enviando dados:', formData);
     
     if (onNavigate) {
@@ -137,6 +139,32 @@ const DadosPessoaisForm = ({ onNavigate }) => {
                 maxLength={10}
               />
             </View>
+          </View>
+
+          {/* Campo Email */}
+          <View style={styles.fieldFull}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="seu@email.com"
+              placeholderTextColor="#94a3b8"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+          </View>
+
+          {/* Campo Senha */}
+          <View style={styles.fieldFull}>
+            <Text style={styles.label}>Senha</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite sua senha"
+              placeholderTextColor="#94a3b8"
+              value={senha}
+              onChangeText={setSenha}
+              secureTextEntry={true}
+            />
           </View>
 
           {/* Seletor: Filho ou Visitante */}
