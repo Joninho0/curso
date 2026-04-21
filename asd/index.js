@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 import React, { useState } from 'react';
-import App from './App';
-import App2 from './App2';
+import App from './dados-pessoais';
+import App2 from './cadastro';
 
 function RootNavigator() {
   const [currentPage, setCurrentPage] = useState('app1');
