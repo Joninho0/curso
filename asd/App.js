@@ -17,7 +17,7 @@ const DadosPessoaisForm = ({ onNavigate }) => {
   const [cpf, setCpf] = useState('');
   const [idade, setIdade] = useState('');
   const [inicio, setInicio] = useState('');
-  const [tipo, setTipo] = useState('filho');
+  const [tipo, setTipo] = useState('selecione');
 
   const formatCPF = (value) => {
     // Remove tudo que não for dígito
