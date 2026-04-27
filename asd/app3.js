@@ -411,3 +411,9 @@ const styles = StyleSheet.create({
 });
 
 export default LoginForm;
+
+
+
+// Este componente é um formulário de login que permite aos usuários fazer login usando email ou CPF. 
+// Ele inclui validação básica, feedback visual e simula uma busca em um banco de dados para autenticar o usuário. 
+// O design é moderno e responsivo, com foco na experiência do usuário.
